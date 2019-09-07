@@ -1,0 +1,28 @@
+const expensesInitialState = [];
+
+export default  (state = expensesInitialState, action) => {
+    switch (action.type) {
+        case 'ADD_EXPENSE':
+            console.log('Add :' ,[...state, action.expense]);
+            return [...state, action.expense];
+        case 'EDIT_EXPENSE':
+            return state.map((expense) => {
+                if (expense.id == action.id) {
+                    return {
+                        ...expense,
+                        ...action.updates
+                    }
+                }
+                else {
+                    return expense;
+                }
+
+            });
+        case 'REMOVE_EXPENSE':
+            return state.filter(({ id }) => {
+                return id != action.id;
+            });
+        default:
+            return state;
+    }
+}
